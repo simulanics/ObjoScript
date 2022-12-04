@@ -473,7 +473,7 @@ Implements ObjoScript.ExprVisitor,ObjoScript.StmtVisitor
 		  node.AppendNode(keyNode)
 		  
 		  Var valueNode As New TreeViewNode("Value:")
-		  valueNode.AppendNode(kv.Value.Accept(Self))
+		  keyNode.AppendNode(kv.Value.Accept(Self))
 		  node.AppendNode(valueNode)
 		  
 		  Return node

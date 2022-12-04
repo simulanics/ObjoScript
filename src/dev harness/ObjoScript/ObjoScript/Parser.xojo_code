@@ -719,7 +719,7 @@ Protected Class Parser
 		  TokenTypes.Breakpoint           : Unused, _
 		  TokenTypes.Caret                : BinaryOperator(Precedences.BitwiseXor), _
 		  TokenTypes.Class_               : Unused, _
-		  TokenTypes.Colon                : NewRule(Nil, New KeyValueParselet, Precedences.Range), _
+		  TokenTypes.Colon                : Unused, _
 		  TokenTypes.Comma                : Unused, _
 		  TokenTypes.Constructor          : Unused, _
 		  TokenTypes.Continue_            : Unused, _
@@ -744,7 +744,7 @@ Protected Class Parser
 		  TokenTypes.GreaterEqual         : BinaryOperator(Precedences.Comparison), _
 		  TokenTypes.GreaterGreater       : BinaryOperator(Precedences.BitwiseShift), _
 		  TokenTypes.Identifier           : Prefix(New VariableParselet), _
-		  TokenTypes.If_                  : NewRule(Nil, New ConditionalParselet, Precedences.Assignment), _
+		  TokenTypes.If_                  : Unused, _
 		  TokenTypes.Import               : Unused, _
 		  TokenTypes.In_                  : Unused, _
 		  TokenTypes.Is_                  : NewRule(Nil, New IsParselet, Precedences.Is_), _
@@ -767,7 +767,7 @@ Protected Class Parser
 		  TokenTypes.Plus                 : BinaryOperator(Precedences.Term), _
 		  TokenTypes.PlusEqual            : Unused, _
 		  TokenTypes.PlusPlus             : Postfix, _
-		  TokenTypes.Query                : Unused, _
+		  TokenTypes.Query                : NewRule(Nil, New ConditionalParselet, Precedences.Assignment), _
 		  TokenTypes.RCurly               : Unused, _
 		  TokenTypes.Return_              : Unused, _
 		  TokenTypes.RParen               : Unused, _
@@ -903,7 +903,10 @@ Protected Class Parser
 		  "Nothing", _
 		  "Number", _
 		  "String", _
-		  "System" _
+		  "System", _
+		  "Web", _
+		  "File", _
+		  "JSON" _
 		  )
 		  
 		  Return types

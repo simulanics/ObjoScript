@@ -890,6 +890,7 @@ Begin DesktopWindow WinObjoScriptUnitTests
    Begin DesktopProgressWheel ProgressWheel1
       Active          =   False
       AllowAutoDeactivate=   True
+      AllowTabStop    =   False
       Enabled         =   True
       Height          =   16
       Index           =   -2147483648
@@ -904,7 +905,7 @@ Begin DesktopWindow WinObjoScriptUnitTests
       Scope           =   0
       TabIndex        =   6
       TabPanelIndex   =   0
-      TabStop         =   True
+      TabStop         =   "True"
       Tooltip         =   ""
       Top             =   7
       Transparent     =   False
@@ -1058,65 +1059,65 @@ End
 
 	#tag MenuHandler
 		Function EditSelectAllGroups() As Boolean Handles EditSelectAllGroups.Action
-		  SelectAllGroups(True, False)
-		  
-		  Return True
-		  
+			SelectAllGroups(True, False)
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditUnselectAllGroups() As Boolean Handles EditUnselectAllGroups.Action
-		  SelectAllGroups(False, False)
-		  
-		  Return True
-		  
+			SelectAllGroups(False, False)
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileCloseWindow() As Boolean Handles FileCloseWindow.Action
-		  Self.Close
-		  
-		  Return True
-		  
+			Self.Close
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileNewEditor() As Boolean Handles FileNewEditor.Action
-		  // Create a new IDE window instance.
-		  
-		  Var w As New WinIDE(Nil)
-		  w.Show
-		  
-		  Return True
-		  
+			// Create a new IDE window instance.
+			
+			Var w As New WinIDE(Nil)
+			w.Show
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileOpenScript() As Boolean Handles FileOpenScript.Action
-		  /// Open an ObjoScript file.
-		  
-		  Var f As FolderItem = FolderItem.ShowOpenFileDialog(DocumentTypes.ObjoScript)
-		  
-		  If f = Nil Then Return True
-		  
-		  Var w As New WinIDE(f)
-		  w.Show
-		  
-		  Return True
-		  
+			/// Open an ObjoScript file.
+			
+			Var f As FolderItem = FolderItem.ShowOpenFileDialog(DocumentTypes.ObjoScript)
+			
+			If f = Nil Then Return True
+			
+			Var w As New WinIDE(f)
+			w.Show
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileRun() As Boolean Handles FileRun.Action
-		  RunTests
-		  
-		  Return True
-		  
+			RunTests
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 

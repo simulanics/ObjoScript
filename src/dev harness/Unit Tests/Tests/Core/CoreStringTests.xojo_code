@@ -104,8 +104,20 @@ Inherits ObjoScriptTestGroupBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub RegexReplaceAllTest()
+		  AssertOutputsEqual("core.string.regexreplaceall")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub RegexReplaceTest()
+		  AssertOutputsEqual("core.string.regexreplace")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Sub ReplaceAllTest()
-		  AssertOutputsEqual("core.string.replaceAll")
+		  AssertOutputsEqual("core.string.replaceall")
 		End Sub
 	#tag EndMethod
 
@@ -130,6 +142,12 @@ Inherits ObjoScriptTestGroupBase
 	#tag Method, Flags = &h0
 		Sub StartsWithTest()
 		  AssertOutputsEqual("core.string.startsWith")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub StringtoIntegertoStringTest()
+		  AssertOutputsEqual("core.string.stringtointegertostring")
 		End Sub
 	#tag EndMethod
 

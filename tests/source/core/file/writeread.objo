@@ -1,0 +1,13 @@
+
+var fName = File.temporary + "test.tmp"
+
+File.write(fName, "File Contents")
+
+var y = File.read(fName)
+
+System.print(y)
+
+var isFileDeleted = File.remove(fName)
+
+System.print(isFileDeleted)
+

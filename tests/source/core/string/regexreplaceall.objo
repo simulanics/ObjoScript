@@ -1,0 +1,8 @@
+
+var searchpattern = "\\D"
+var replacementpattern = ""
+var t = "230818ABC"
+
+var output = t.regexReplaceAll(searchpattern, replacementpattern)
+
+System.print(output)

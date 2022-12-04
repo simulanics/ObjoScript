@@ -99,6 +99,7 @@ Begin DesktopWindow WinIDE
       Active          =   False
       AllowAutoDeactivate=   True
       AllowFocus      =   True
+      AllowTabStop    =   False
       BackgroundColor =   &c00000000
       BevelStyle      =   0
       Bold            =   False
@@ -131,7 +132,6 @@ Begin DesktopWindow WinIDE
       Scope           =   2
       TabIndex        =   1
       TabPanelIndex   =   0
-      TabStop         =   True
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   20
@@ -149,6 +149,7 @@ Begin DesktopWindow WinIDE
       Active          =   False
       AllowAutoDeactivate=   True
       AllowFocus      =   True
+      AllowTabStop    =   False
       BackgroundColor =   &c00000000
       BevelStyle      =   0
       Bold            =   False
@@ -181,7 +182,6 @@ Begin DesktopWindow WinIDE
       Scope           =   2
       TabIndex        =   2
       TabPanelIndex   =   0
-      TabStop         =   True
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   20
@@ -199,6 +199,7 @@ Begin DesktopWindow WinIDE
       Active          =   False
       AllowAutoDeactivate=   True
       AllowFocus      =   True
+      AllowTabStop    =   False
       BackgroundColor =   &c00000000
       BevelStyle      =   0
       Bold            =   False
@@ -231,7 +232,6 @@ Begin DesktopWindow WinIDE
       Scope           =   2
       TabIndex        =   3
       TabPanelIndex   =   0
-      TabStop         =   True
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   20
@@ -249,6 +249,7 @@ Begin DesktopWindow WinIDE
       Active          =   False
       AllowAutoDeactivate=   True
       AllowFocus      =   True
+      AllowTabStop    =   False
       BackgroundColor =   &c00000000
       BevelStyle      =   0
       Bold            =   False
@@ -281,7 +282,6 @@ Begin DesktopWindow WinIDE
       Scope           =   2
       TabIndex        =   5
       TabPanelIndex   =   0
-      TabStop         =   True
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   20
@@ -828,6 +828,7 @@ Begin DesktopWindow WinIDE
       Active          =   False
       AllowAutoDeactivate=   True
       AllowFocus      =   True
+      AllowTabStop    =   False
       BackgroundColor =   &c00000000
       BevelStyle      =   0
       Bold            =   False
@@ -860,7 +861,6 @@ Begin DesktopWindow WinIDE
       Scope           =   2
       TabIndex        =   14
       TabPanelIndex   =   0
-      TabStop         =   True
       TextColor       =   &c00000000
       Tooltip         =   ""
       Top             =   20
@@ -955,162 +955,162 @@ End
 
 	#tag MenuHandler
 		Function EditCopy() As Boolean Handles EditCopy.Action
-		  // Copies the contents of the current selection in the editor to the clipboard.
-		  
-		  Var c As New Clipboard
-		  If Editor.TextSelected Then
-		    c.Text = Editor.CurrentSelection.ToString
-		  Else
-		    c.Text = ""
-		  End If
-		  c.Close
-		  
-		  Return True
-		  
+			// Copies the contents of the current selection in the editor to the clipboard.
+			
+			Var c As New Clipboard
+			If Editor.TextSelected Then
+			c.Text = Editor.CurrentSelection.ToString
+			Else
+			c.Text = ""
+			End If
+			c.Close
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditCut() As Boolean Handles EditCut.Action
-		  // Cuts the contents of the current selection in the editor and puts it on the clipboard.
-		  
-		  Var c As New Clipboard
-		  If Editor.TextSelected Then
-		    c.Text = Editor.CurrentSelection.ToString
-		  Else
-		    c.Text = ""
-		  End If
-		  c.Close
-		  
-		  Editor.DeleteSelection(True, True, True, "Cut Text")
-		  
-		  Return True
-		  
+			// Cuts the contents of the current selection in the editor and puts it on the clipboard.
+			
+			Var c As New Clipboard
+			If Editor.TextSelected Then
+			c.Text = Editor.CurrentSelection.ToString
+			Else
+			c.Text = ""
+			End If
+			c.Close
+			
+			Editor.DeleteSelection(True, True, True, "Cut Text")
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditPaste() As Boolean Handles EditPaste.Action
-		  // Pastes the contents of the clipboard into the editor.
-		  
-		  // Get the clipboard text (replacing any line endings with UNIX ones).
-		  Var c As New Clipboard
-		  Var t As String = c.Text.ReplaceLineEndings(&u0A)
-		  c.Close
-		  
-		  // Insert the text.
-		  If t.CharacterCount > 0 Then
-		    If Editor.TextSelected Then
-		      Editor.ReplaceCurrentSelection(t)
-		    Else
-		      Editor.Insert(t, Editor.CaretPosition, True)
-		    End If
-		  End If
-		  
-		  Return True
-		  
+			// Pastes the contents of the clipboard into the editor.
+			
+			// Get the clipboard text (replacing any line endings with UNIX ones).
+			Var c As New Clipboard
+			Var t As String = c.Text.ReplaceLineEndings(&u0A)
+			c.Close
+			
+			// Insert the text.
+			If t.CharacterCount > 0 Then
+			If Editor.TextSelected Then
+			Editor.ReplaceCurrentSelection(t)
+			Else
+			Editor.Insert(t, Editor.CaretPosition, True)
+			End If
+			End If
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditRedo() As Boolean Handles EditRedo.Action
-		  If UndoManager.CanRedo Then
-		    UndoManager.Redo
-		  End If
-		  
-		  Return True
-		  
+			If UndoManager.CanRedo Then
+			UndoManager.Redo
+			End If
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditSelectAll() As Boolean Handles EditSelectAll.Action
-		  // Select everything in the editor.
-		  
-		  Self.Editor.SelectAll
-		  
-		  Return True
-		  
+			// Select everything in the editor.
+			
+			Self.Editor.SelectAll
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function EditUndo() As Boolean Handles EditUndo.Action
-		  If UndoManager.CanUndo Then
-		    UndoManager.Undo
-		  End If
-		  
-		  Return True
-		  
+			If UndoManager.CanUndo Then
+			UndoManager.Undo
+			End If
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileCloseWindow() As Boolean Handles FileCloseWindow.Action
-		  Self.Close
-		  
-		  Return True
-		  
+			Self.Close
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileNew() As Boolean Handles FileNew.Action
-		  // Create a new IDE window instance.
-		  
-		  Var w As New WinIDE(Nil)
-		  w.Show
-		  
-		  Return True
-		  
+			// Create a new IDE window instance.
+			
+			Var w As New WinIDE(Nil)
+			w.Show
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileOpen() As Boolean Handles FileOpen.Action
-		  /// Open an ObjoScript file.
-		  
-		  Var f As FolderItem = FolderItem.ShowOpenFileDialog(DocumentTypes.ObjoScript)
-		  
-		  If f = Nil Then Return True
-		  
-		  Var w As New WinIDE(f)
-		  w.Show
-		  
-		  Return True
-		  
+			/// Open an ObjoScript file.
+			
+			Var f As FolderItem = FolderItem.ShowOpenFileDialog(DocumentTypes.ObjoScript)
+			
+			If f = Nil Then Return True
+			
+			Var w As New WinIDE(f)
+			w.Show
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileRun() As Boolean Handles FileRun.Action
-		  ButtonStop.Enabled = True
-		  
-		  BeginVM(ObjoScript.VM.StepModes.None)
-		  
-		  Return True
+			ButtonStop.Enabled = True
+			
+			BeginVM(ObjoScript.VM.StepModes.None)
+			
+			Return True
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileSave() As Boolean Handles FileSave.Action
-		  If SaveFile(Self.File) Then
-		    Self.Changed = False
-		  End If
-		  
-		  Return True
-		  
+			If SaveFile(Self.File) Then
+			Self.Changed = False
+			End If
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
 	#tag MenuHandler
 		Function FileSaveAs() As Boolean Handles FileSaveAs.Action
-		  If SaveFile(Nil) Then
-		    Self.Changed = False
-		  End If
-		  
-		  Return True
-		  
+			If SaveFile(Nil) Then
+			Self.Changed = False
+			End If
+			
+			Return True
+			
 		End Function
 	#tag EndMenuHandler
 
@@ -1340,13 +1340,50 @@ End
 		  AutocompleteEngine.AddOption("Boolean")
 		  AutocompleteEngine.AddOption("Function")
 		  AutocompleteEngine.AddOption("List")
+		  
+		  ////////////Number///////////////////
 		  AutocompleteEngine.AddOption("Number")
+		  // Class methods.
+		  AutocompleteEngine.AddOption("abs")
+		  AutocompleteEngine.AddOption("acos")
+		  AutocompleteEngine.AddOption("asin")
+		  AutocompleteEngine.AddOption("atan")
+		  AutocompleteEngine.AddOption("ceil")
+		  AutocompleteEngine.AddOption("cos")
+		  AutocompleteEngine.AddOption("exp")
+		  AutocompleteEngine.AddOption("floor")
+		  AutocompleteEngine.AddOption("log")
+		  AutocompleteEngine.AddOption("isInteger")
+		  AutocompleteEngine.AddOption("max")
+		  AutocompleteEngine.AddOption("min")
+		  AutocompleteEngine.AddOption("pow")
+		  AutocompleteEngine.AddOption("round")
+		  AutocompleteEngine.AddOption("sign")
+		  AutocompleteEngine.AddOption("sqrt")
+		  AutocompleteEngine.AddOption("sin")
+		  AutocompleteEngine.AddOption("tan")
+		  AutocompleteEngine.AddOption("toString")
+		  
 		  AutocompleteEngine.AddOption("Object")
 		  AutocompleteEngine.AddOption("String")
-		  AutocompleteEngine.AddOption("System")
 		  
+		  ////////////System///////////////////
+		  AutocompleteEngine.AddOption("System")
 		  // Common methods.
 		  AutocompleteEngine.AddOption("System.print")
+		  AutocompleteEngine.AddOption("Web")
+		  AutocompleteEngine.AddOption("File")
+		  AutocompleteEngine.AddOption("JSON")
+		  
+		  
+		  AutocompleteEngine.AddOption("File.read")
+		  AutocompleteEngine.AddOption("File.write")
+		  AutocompleteEngine.AddOption("File.copy")
+		  AutocompleteEngine.AddOption("File.move")
+		  AutocompleteEngine.AddOption("File.remove")
+		  AutocompleteEngine.AddOption("File.temporary")
+		  AutocompleteEngine.AddOption("Web.request")
+		  AutocompleteEngine.AddOption("Web.sqldate")
 		End Sub
 	#tag EndMethod
 

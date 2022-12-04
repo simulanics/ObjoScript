@@ -1,0 +1,12 @@
+
+function getRequest() {
+var s = Web.request("GET", "http://www.geoplugin.net/json.gp")
+if (s.count > 0) {
+ return true
+} else {
+ return false
+}
+
+}
+
+System.print( getRequest() )

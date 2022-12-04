@@ -1,6 +1,6 @@
 #tag Class
 Protected Class TestResult
-	#tag Property, Flags = &h0, Description = 20
+	#tag Property, Flags = &h0
 		Data As String
 	#tag EndProperty
 
@@ -129,7 +129,7 @@ Protected Class TestResult
 			Group="Behavior"
 			InitialValue=""
 			Type="String"
-			EditorType=""
+			EditorType="MultiLineEditor"
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

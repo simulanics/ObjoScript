@@ -2,14 +2,20 @@
 Protected Class LanguageConditionalTests
 Inherits ObjoScriptTestGroupBase
 	#tag Method, Flags = &h0
-		Sub MissingConditionTest()
-		  AssertCompilerError("language.conditional.missing_condition")
+		Sub MissingColon2Test()
+		  AssertCompilerError("language.conditional.missing_colon_2")
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub MissingElse2Test()
-		  AssertCompilerError("language.conditional.missing_else_2")
+		Sub MissingColonTest()
+		  AssertCompilerError("language.conditional.missing_colon")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub MissingConditionTest()
+		  AssertCompilerError("language.conditional.missing_condition")
 		End Sub
 	#tag EndMethod
 
@@ -32,14 +38,14 @@ Inherits ObjoScriptTestGroupBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub NewlineAfterElseTest()
-		  AssertCompilerError("language.conditional.newline_after_else")
+		Sub NewlineAfterColonTest()
+		  AssertCompilerError("language.conditional.newline_after_colon")
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub NewlineAfterIfTest()
-		  AssertCompilerError("language.conditional.newline_after_if")
+		Sub NewlineAfterQuestionTest()
+		  AssertCompilerError("language.conditional.newline_after_question")
 		End Sub
 	#tag EndMethod
 

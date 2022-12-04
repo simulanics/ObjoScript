@@ -3080,20 +3080,6 @@ Implements ObjoScript.ExprVisitor,ObjoScript.StmtVisitor
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Type"
-			Visible=false
-			Group="Behavior"
-			InitialValue="ObjoScript.FunctionTypes.TopLevel"
-			Type="ObjoScript.FunctionTypes"
-			EditorType="Enum"
-			#tag EnumValues
-				"0 - TopLevel"
-				"1 - Func"
-				"2 - Method"
-				"3 - Constructor"
-			#tag EndEnumValues
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="DebugMode"
 			Visible=false
 			Group="Behavior"
@@ -3108,6 +3094,20 @@ Implements ObjoScript.ExprVisitor,ObjoScript.StmtVisitor
 			InitialValue="False"
 			Type="Boolean"
 			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="Type"
+			Visible=false
+			Group="Behavior"
+			InitialValue="ObjoScript.FunctionTypes.TopLevel"
+			Type="ObjoScript.FunctionTypes"
+			EditorType="Enum"
+			#tag EnumValues
+				"0 - TopLevel"
+				"1 - Func"
+				"2 - Method"
+				"3 - Constructor"
+			#tag EndEnumValues
 		#tag EndViewProperty
 	#tag EndViewBehavior
 End Class

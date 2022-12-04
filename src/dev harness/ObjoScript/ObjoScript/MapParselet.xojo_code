@@ -16,12 +16,7 @@ Implements ObjoScript.PrefixParselet
 		  Var keyValues() As ObjoScript.KeyValueExpr
 		  If Not parser.Check(ObjoScript.TokenTypes.RCurly) Then
 		    Do
-		      Var kv As ObjoScript.Expr = parser.Expression
-		      If kv IsA ObjoScript.KeyValueExpr = False Then
-		        parser.Error("Expected a key-value pair.")
-		      Else
-		        keyValues.Add(ObjoScript.KeyValueExpr(kv))
-		      End If
+		      keyValues.Add(ParseKeyValue(parser))
 		    Loop Until Not parser.Match(ObjoScript.TokenTypes.Comma)
 		  End If
 		  
@@ -34,8 +29,8 @@ Implements ObjoScript.PrefixParselet
 		End Function
 	#tag EndMethod
 
-	#tag Method, Flags = &h0, Description = 5061727365732061204D6170206C69746572616C206B65792D76616C756520706169722E204C6566743A204E756D6265722F537472696E672F426F6F6C65616E2F4E6F7468696E672C2052696768743A20604F626A6F5363726970742E45787072602E
-		Shared Function ParseKeyValue(parser As ObjoScript.Parser) As ObjoScript.KeyValueExpr
+	#tag Method, Flags = &h21, Description = 5061727365732061204D6170206C69746572616C206B65792D76616C756520706169722E204C6566743A204E756D6265722F537472696E672F426F6F6C65616E2F4E6F7468696E672C2052696768743A20604F626A6F5363726970742E45787072602E
+		Private Function ParseKeyValue(parser As ObjoScript.Parser) As ObjoScript.KeyValueExpr
 		  /// Parses a Map literal key-value pair.
 		  /// Left: `ObjoScript.Expr`, Right: `ObjoScript.Expr`.
 		  

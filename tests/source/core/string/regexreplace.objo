@@ -1,0 +1,8 @@
+
+var searchpattern = "abc"
+var replacementpattern = ""
+var t = "abcDEFabc"
+
+var output = t.regexReplace(searchpattern, replacementpattern)
+
+System.print(output)

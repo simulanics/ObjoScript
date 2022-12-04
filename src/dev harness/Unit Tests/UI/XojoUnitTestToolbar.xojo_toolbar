@@ -1,6 +1,5 @@
 #tag DesktopToolbar
 Begin DesktopToolbar XojoUnitTestToolbar
-Inherits DesktopToolbar
 	Begin DesktopToolbarButton RunButton
 		Caption = "Run Tests"
 		Tooltip = ""

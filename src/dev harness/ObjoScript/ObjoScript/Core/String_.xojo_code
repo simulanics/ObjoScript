@@ -115,6 +115,70 @@ Protected Module String_
 		End Sub
 	#tag EndMethod
 
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub DecodeBase64(vm As ObjoScript.VM)
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var s As String = vm.GetSlotValue(0)
+		  
+		  
+		  vm.SetReturn(DecodeBase64(s))
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub DecodeHex(vm As ObjoScript.VM)
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var s As String = vm.GetSlotValue(0)
+		  
+		  
+		  vm.SetReturn(DecodeHex(s))
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub EncodeBase64(vm As ObjoScript.VM)
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var s As String = vm.GetSlotValue(0)
+		  
+		  
+		  vm.SetReturn(EncodeBase64(s, 0))
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub EncodeHex(vm As ObjoScript.VM)
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var s As String = vm.GetSlotValue(0)
+		  
+		  
+		  vm.SetReturn(EncodeHex(s))
+		  
+		End Sub
+	#tag EndMethod
+
 	#tag Method, Flags = &h1, Description = 52657475726E732074727565206966207468697320737472696E6720656E647320776974682060737566666978602E20436173652D696E73656E7369746976652E
 		Protected Sub EndsWith(vm As ObjoScript.VM)
 		  /// Returns true if this string ends with `suffix`. Case-insensitive.
@@ -325,6 +389,10 @@ Protected Module String_
 		  d.Value("codePoints()")     = AddressOf CodePoints
 		  d.Value("contains(_)")      = AddressOf Contains
 		  d.Value("count()")          = AddressOf Count
+		  d.value("decodehex()")      = AddressOf DecodeHex
+		  d.value("decodebase64()")      = AddressOf DecodeBase64
+		  d.value("encodehex()")      = AddressOf EncodeHex
+		  d.value("encodebase64()")      = AddressOf EncodeBase64
 		  d.Value("endsWith(_)")      = AddressOf EndsWith
 		  d.Value("endsWith(_,_)")    = AddressOf EndsWithCaseSensitivity
 		  d.Value("indexOf(_)")       = AddressOf IndexOf
@@ -336,6 +404,8 @@ Protected Module String_
 		  d.Value("lowercase()")      = AddressOf Lowercase
 		  d.Value("middle(_)")        = AddressOf Middle
 		  d.Value("middle(_,_)")      = AddressOf MiddleLength
+		  d.Value("regexreplace(_,_)")= AddressOf RegExReplace
+		  d.Value("regexreplaceall(_,_)")= AddressOf RegExReplaceAll
 		  d.Value("replace(_,_)")     = AddressOf Replace
 		  d.Value("replaceAll(_,_)")  = AddressOf ReplaceAll
 		  d.Value("right(_)")         = AddressOf Right
@@ -350,6 +420,7 @@ Protected Module String_
 		  d.Value("trimStart()")      = AddressOf TrimStart
 		  d.Value("trimStart(_)")     = AddressOf TrimStartChars
 		  d.Value("uppercase()")      = AddressOf Uppercase
+		  d.Value("toInteger()")      = AddressOf ToInteger
 		  
 		  Return d
 		  
@@ -584,6 +655,86 @@ Protected Module String_
 	#tag EndMethod
 
 	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub RegExReplace(vm As ObjoScript.VM)
+		  /// Replaces the first occurrence of `what` in this string with `with`.
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  /// - Slot 1 is `what` (the string to search for)
+		  /// - Slot 2 is `with` (the replacement string)
+		  ///
+		  /// String.replace(what, with) -> string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var t As String = vm.GetSlotValue(0)
+		  Var s As String = vm.GetSlotValue(1)
+		  Var r As String = vm.GetSlotValue(2)
+		  
+		  
+		  Dim re As New RegEx
+		  re.SearchPattern = s
+		  re.ReplacementPattern = r
+		  re.Options.ReplaceAllMatches = false
+		  
+		  
+		  t = re.Replace(t)
+		  
+		  // Assert `what` and `with` are strings.
+		  If Not vm.GetSlotValue(1).Type = Variant.TypeString Then
+		    vm.Error("The `what` argument must be a string.")
+		  ElseIf Not vm.GetSlotValue(2).Type = Variant.TypeString Then
+		    vm.Error("The `with` argument must be a string.")
+		  End If
+		  
+		  //var sReturn as Variant = s.ReplaceBytes(vm.GetSlotValue(1), vm.GetSlotValue(2))
+		  
+		  vm.SetReturn(t)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
+		Protected Sub RegExReplaceAll(vm As ObjoScript.VM)
+		  /// Replaces the first occurrence of `what` in this string with `with`.
+		  /// Case-sensitive.
+		  ///
+		  /// Assumes: 
+		  /// - Slot 0 is a string
+		  /// - Slot 1 is `what` (the string to search for)
+		  /// - Slot 2 is `with` (the replacement string)
+		  ///
+		  /// String.replace(what, with) -> string
+		  
+		  /// Since this is a built-in type, slot 0 will be a string (not an instance object).
+		  Var t As String = vm.GetSlotValue(0)
+		  Var s As String = vm.GetSlotValue(1)
+		  Var r As String = vm.GetSlotValue(2)
+		  
+		  
+		  Dim re As New RegEx
+		  re.SearchPattern = s
+		  re.ReplacementPattern = r
+		  re.Options.ReplaceAllMatches = true
+		  
+		  
+		  t = re.Replace(t)
+		  
+		  // Assert `what` and `with` are strings.
+		  If Not vm.GetSlotValue(1).Type = Variant.TypeString Then
+		    vm.Error("The `what` argument must be a string.")
+		  ElseIf Not vm.GetSlotValue(2).Type = Variant.TypeString Then
+		    vm.Error("The `with` argument must be a string.")
+		  End If
+		  
+		  //var sReturn as Variant = s.ReplaceBytes(vm.GetSlotValue(1), vm.GetSlotValue(2))
+		  
+		  vm.SetReturn(t)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 5265706C6163657320746865206669727374206F6363757272656E6365206F662060776861746020696E207468697320737472696E672077697468206077697468602E20436173652D696E73656E7369746976652E
 		Protected Sub Replace(vm As ObjoScript.VM)
 		  /// Replaces the first occurrence of `what` in this string with `with`.
 		  /// Case-sensitive.
@@ -686,8 +837,10 @@ Protected Module String_
 		    vm.Error("The `separator` argument must be a string.")
 		  End If
 		  
+		  var splitItem as String = vm.GetSlotAsString(1)
+		  
 		  // Split the string.
-		  Var columns() As String = s.Split(vm.GetSlotValue(1))
+		  Var columns() As String = s.Split( splitItem )
 		  
 		  // Return a new list.
 		  vm.SetReturn(vm.NewList(columns))
@@ -753,6 +906,18 @@ Protected Module String_
 		  
 		  Var s As String = vm.GetSlotValue(0)
 		  vm.SetReturn(s.Titlecase)
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 52657475726E732074686520636F73696E65206F6620746865206E756D6265722E
+		Protected Sub ToInteger(vm As ObjoScript.VM)
+		  /// Returns a string representation of this number.
+		  ///
+		  /// Since this is a built-in type, slot 0 will be a double (not an instance object).
+		  /// Number.toString() -> string
+		  
+		  vm.SetReturn(vm.GetSlotAsString(0).Val)
 		  
 		End Sub
 	#tag EndMethod

@@ -98,8 +98,14 @@ Inherits ObjoScriptTestGroupBase
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub SortTest()
-		  AssertOutputsEqual("core.list.sort")
+		Sub SortAscendingTest()
+		  AssertOutputsEqual("core.list.sortascending")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub SortDecendingTest()
+		  AssertOutputsEqual("core.list.sortdescending")
 		End Sub
 	#tag EndMethod
 

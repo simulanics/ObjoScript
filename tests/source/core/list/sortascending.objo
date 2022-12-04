@@ -1,0 +1,7 @@
+var list = [2,5,1,4,3]
+var list2 = ["dog", "house", "airplane", "cat", "goat", "elephant", "bat", "frog"]
+list.sortAscending()
+list2.sortAscending()
+
+System.print(list)
+System.print(list2)

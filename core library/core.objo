@@ -96,8 +96,6 @@ foreign sqrt()
 foreign sin()
 foreign tan()
 foreign toString()
-
-foreign static fromString(value)
 }
 
 /// ----------------------------------------------------
@@ -186,7 +184,7 @@ foreach element in this { action(element) }
 /// Relies on the fact that calling `iterate(nothing)` on an object that implements
 /// the `iterator protocol` returns the first item or `false` if there are no items.
 isEmpty {
-return false if this.iterate(nothing) else true
+return this.iterate(nothing) ? false : true
 }
 }
 
@@ -202,6 +200,10 @@ foreign [index]
 foreign codePoints()
 foreign contains(other)
 foreign count()
+foreign encodebase64()
+foreign decodebase64()
+foreign encodehex()
+foreign decodehex()
 foreign endsWith(suffix)
 foreign endsWith(suffix, caseSensitive)
 foreign indexOf(other)
@@ -213,6 +215,8 @@ foreign left(count)
 foreign lowercase()
 foreign middle(start)
 foreign middle(start, length)
+foreign regexreplace(what, with)
+foreign regexreplaceall(what, with)
 foreign replace(what, with)
 foreign replaceAll(what, with)
 foreign right(count)
@@ -227,6 +231,7 @@ foreign trimEnd(chars)
 foreign trimStart()
 foreign trimStart(chars)
 foreign uppercase()
+foreign toInteger()
 }
 
 /// ----------------------------------------------------
@@ -254,68 +259,10 @@ foreign indexOf(item)
 foreign insert(index, item)
 foreign iterate(iter)
 foreign iteratorValue(iter)
-foreign pop()
 foreign remove(item)
 foreign removeAt(index)
-
-/// Sorts a single dimension list using an iterative quicksort algorithm.
-sort() {
-// Create a stack for storing sublist start and end index.
-var stack = []
-
-// Get the starting and ending index of a given list.
-var start = 0
-var end = this.count - 1
-
-// Push the start and end index of the array into the stack.
-stack.add(start : end)
-
-// Loop until the stack is empty.
-while not stack.isEmpty {
-// Remove top pair from the list and get sublist starting and ending indices.
-var pair = stack.pop()
-start = pair.key
-end = pair.value
-
-// Rearrange elements across pivot.
-// Pick the rightmost element as a pivot from the list.
-var pivot = this[end]
-
-// Elements less than the pivot will go to the left of `pIndex`
-// Elements more than the pivot will go to the right of `pIndex`
-// Equal elements can go either way
-var pIndex = start
-
-// Each time we find an element less than or equal to the pivot,
-// `pIndex` is incremented, and that element would be placed
-// before the pivot.
-foreach i in start...end {
-if this[i] <= pivot {
-this.swap(i, pIndex)
-pIndex = pIndex + 1
-}
-}
-
-// Swap `pIndex` with pivot
-this.swap(pIndex, end)
-
-// We now have index of the pivot element.
-pivot = pIndex
-
-// Push sublist indices containing elements that are
-// less than the current pivot to stack.
-if pivot - 1 > start {
-stack.add(start : pivot - 1)
-}
-
-// Push sublist indices containing elements that are
-// more than the current pivot to stack.
-if pivot + 1 < end {
-stack.add(pivot + 1 : end)
-}
-}
-}
-
+foreign sortAscending()
+foreign sortDescending()
 foreign swap(index0, index1)
 foreign toString()
 
@@ -373,7 +320,7 @@ foreign [key]=(value)
 /// the VM.
 foreign class System {
 foreign static clock()
-foreign static print(object)   
+foreign static print(object)  
 }
 
 /// ----------------------------------------------------
@@ -400,11 +347,16 @@ foreign lessThan(upper)
 foreign number()
 }
 
-/// ----------------------------------------------------
-/// FILE
-/// ----------------------------------------------------
-/// A class used to read/write files.
-foreign class File {
-constructor(path) {}
-foreign readLines()
+class Web {
+  foreign static request(method,url)
+  foreign static sqldate()
+}
+
+class File {
+  foreign static copy(file, dest)
+  foreign static move(file, dest)
+  foreign static read(file)
+  foreign static remove(file)
+  foreign static temporary()
+  foreign static write(file,content) 
 }

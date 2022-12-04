@@ -186,13 +186,15 @@ Protected Module List
 		  d.Value("insert(_,_)")      = AddressOf Insert
 		  d.Value("iterate(_)")       = AddressOf Iterate
 		  d.Value("iteratorValue(_)") = AddressOf IteratorValue
-		  d.Value("pop()")            = AddressOf Pop
 		  d.Value("remove(_)")        = AddressOf Remove
 		  d.Value("removeAt(_)")      = AddressOf RemoveAt
+		  d.Value("sortAscending()") = AddressOf SortAscending
+		  d.Value("sortDescending()") = AddressOf SortDescending
 		  d.Value("swap(_,_)")        = AddressOf Swap
 		  d.Value("toString()")       = AddressOf ToString
 		  d.Value("[_]=(_)")          = AddressOf SubscriptSetter
 		  d.Value("[_]")              = AddressOf Subscript
+		  
 		  
 		  Return d
 		  
@@ -336,26 +338,6 @@ Protected Module List
 		End Sub
 	#tag EndMethod
 
-	#tag Method, Flags = &h1, Description = 506F707320746865206869676865737420696E646578206974656D206F666620746865206C69737420616E642072657475726E732069742E204974277320612072756E74696D65206572726F7220696620746865206C69737420697320656D7074792E
-		Protected Sub Pop(vm As ObjoScript.VM)
-		  /// Pops the highest index item off the list and returns it. 
-		  /// It's a runtime error if the list is empty.
-		  ///
-		  /// Assumes:
-		  /// - Slot 0 contains a List instance.
-		  /// List.pop() -> item
-		  
-		  Var data As ObjoScript.Core.List.ListData = ObjoScript.Instance(vm.GetSlotValue(0)).ForeignData
-		  
-		  If data.Items.Count = 0 Then
-		    vm.Error("Cannot pop an empty list.")
-		  Else
-		    vm.SetReturn(data.Items.Pop)
-		  End If
-		  
-		End Sub
-	#tag EndMethod
-
 	#tag Method, Flags = &h1, Description = 52656D6F766573207468652066697273742076616C756520666F756E642074686174206D6174636865732074686520676976656E206076616C7565602E20547261696C696E6720656C656D656E747320617265207368696674656420757020746F2066696C6C20696E207768657265207468652072656D6F76656420656C656D656E74207761732E2052657475726E73207468652072656D6F7665642076616C756520696620666F756E64206F72206E6F7468696E67206966206E6F7420666F756E642E
 		Protected Sub Remove(vm As ObjoScript.VM)
 		  /// Removes the first value found that matches the given `value`.
@@ -422,6 +404,78 @@ Protected Module List
 		  Exception e1 As IllegalCastException
 		    vm.Error("Expected an integer index.")
 		    
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 52657475726E732061207368616C6C6F7720636C6F6E65206F662074686973206C6973742E
+		Protected Sub SortAscending(vm As ObjoScript.VM)
+		  /// Returns a shallow clone of this list.
+		  ///
+		  /// Assumes slot 0 contains a List instance.
+		  /// List.clone() -> List
+		  
+		  /// Returns a shallow clone of `list`.
+		  /// Assumes `list` is a List instance.
+		  
+		  //Var data As ObjoScript.Core.List.ListData = list.ForeignData
+		  Var data As ObjoScript.Core.List.ListData = ObjoScript.Instance(vm.GetSlotValue(0)).ForeignData
+		  
+		  // Shallow clone the items.
+		  Var clonedItems() As String
+		  Var varItems() as Variant
+		  //For Each item As Variant In data.Items
+		  for xx as integer = 0 to data.Items.LastIndex
+		    clonedItems.Add(data.Items(xx).StringValue)
+		    varItems.Add(data.Items(xx))
+		  Next
+		  
+		  clonedItems.SortWith(varItems)
+		  
+		  Var nArray() As Variant
+		  For i As Integer = 0 to clonedItems.LastIndex
+		    nArray.Add( varItems(i) )
+		  Next
+		  
+		  
+		  data.Items = nArray
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h1, Description = 52657475726E732061207368616C6C6F7720636C6F6E65206F662074686973206C6973742E
+		Protected Sub SortDescending(vm As ObjoScript.VM)
+		  /// Returns a shallow clone of this list.
+		  ///
+		  /// Assumes slot 0 contains a List instance.
+		  /// List.clone() -> List
+		  
+		  /// Returns a shallow clone of `list`.
+		  /// Assumes `list` is a List instance.
+		  
+		  //Var data As ObjoScript.Core.List.ListData = list.ForeignData
+		  Var data As ObjoScript.Core.List.ListData = ObjoScript.Instance(vm.GetSlotValue(0)).ForeignData
+		  
+		  // Shallow clone the items.
+		  Var clonedItems() As String
+		  Var varItems() as Variant
+		  //For Each item As Variant In data.Items
+		  for xx as integer = 0 to data.Items.LastIndex
+		    clonedItems.Add(data.Items(xx).StringValue)
+		    varItems.Add(data.Items(xx))
+		  Next
+		  
+		  clonedItems.SortWith(varItems)
+		  
+		  Var reverseArray() As Variant
+		  For i As Integer = clonedItems.LastIndex DownTo 0
+		    reverseArray.Add( varItems(i) )
+		  Next
+		  
+		  
+		  data.Items = reverseArray
+		  
+		  
 		End Sub
 	#tag EndMethod
 
@@ -504,11 +558,10 @@ Protected Module List
 		  
 		  Var data As ObjoScript.Core.List.ListData = instance.ForeignData
 		  
-		  // Adjust `index`, accounting for backwards counting.
-		  index = If(index >= 0, index, data.Count + index)
-		  
 		  // Bounds check.
-		  If index < 0 Or index > data.Items.LastIndex Then
+		  If index < 0 Then
+		    vm.Error("Subscript index must be >= 0.")
+		  ElseIf index > data.Items.LastIndex Then
 		    vm.Error("Subscript index out of bounds (" + index.ToString + ").")
 		  End If
 		  

@@ -35,9 +35,6 @@ Protected Class VM
 		  If className.CompareCase("Boolean") Then
 		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.Boolean_.Allocate, Nil)
 		    
-		  ElseIf className.CompareCase("File") Then
-		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.File.Allocate, Nil)
-		    
 		  ElseIf className.CompareCase("KeyValue") Then
 		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.KeyValue.Allocate, Nil)
 		    
@@ -67,6 +64,13 @@ Protected Class VM
 		    
 		  ElseIf className.CompareCase("System") Then
 		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.System_.Allocate, Nil)
+		    
+		  ElseIf className.CompareCase("Web") Then
+		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.Web.Allocate, Nil)
+		    
+		  ElseIf className.CompareCase("File") Then
+		    Return New ObjoScript.ForeignClassDelegates(AddressOf ObjoScript.Core.File.Allocate, Nil)
+		    
 		  End If
 		  
 		End Function
@@ -85,9 +89,6 @@ Protected Class VM
 		  
 		  If className.CompareCase("Boolean") Then
 		    Return Core.Boolean_.BindForeignMethod(signature, isStatic)
-		    
-		  ElseIf className.CompareCase("File") Then
-		    Return Core.File.BindForeignMethod(signature, isStatic)
 		    
 		  ElseIf className.CompareCase("KeyValue") Then
 		    Return Core.KeyValue.BindForeignMethod(signature, isStatic)
@@ -118,6 +119,16 @@ Protected Class VM
 		    
 		  ElseIf className.CompareCase("System") Then
 		    Return Core.System_.BindForeignMethod(signature, isStatic)
+		    
+		  ElseIf className.CompareCase("Web") Then
+		    Return Core.Web.BindForeignMethod(signature, isStatic)
+		    
+		  ElseIf className.CompareCase("File") Then
+		    Return Core.File.BindForeignMethod(signature, isStatic)
+		    
+		  ElseIf className.CompareCase("JSON") then
+		    Return Core.JSON.BindForeignMethod(signature, isStatic)
+		    
 		  End If
 		  
 		End Function
@@ -375,20 +386,17 @@ Protected Class VM
 		  #Pragma NilObjectChecking False
 		  #Pragma StackOverflowChecking False
 		  
-		  // Call the 2 argument KeyValue constructor.
-		  Call CallClass(Peek(2), 2)
-		  
-		  // Read the key and value.
+		  // Pop the key and value.
 		  Var data As Pair = Pop : Pop
+		  
+		  // Call the default list constructor.
+		  Call CallClass(Peek(0), 0)
 		  
 		  // The top of the stack will now be a KeyValue instance.
 		  // Set it's foreign data.
 		  Var kv As ObjoScript.Instance = Stack(StackTop - 1)
 		  kv.ForeignData = data
 		  
-		  // Update the current call frame (since CallClass doesn't do this for us) and
-		  // we have invoked an actual constructor.
-		  CurrentFrame = Frames(FrameCount - 1)
 		End Sub
 	#tag EndMethod
 
@@ -434,7 +442,7 @@ Protected Class VM
 		    keyValues.Value(Pop) = Pop
 		  Next i
 		  
-		  // Call the 0 argument Map constructor.
+		  // Call the default list constructor.
 		  Call CallClass(Peek(0), 0)
 		  
 		  // The top of the stack will now be a Map instance.

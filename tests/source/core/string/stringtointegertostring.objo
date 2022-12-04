@@ -1,0 +1,5 @@
+var i = "1"
+var b = 2
+var y = i.toInteger + 2
+
+System.print(y.toString)

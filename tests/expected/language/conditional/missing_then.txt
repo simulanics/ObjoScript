@@ -1,1 +1,1 @@
-Expected an expression. Instead got `Boolean`.
+Expected an expression. Instead got `Number`.

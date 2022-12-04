@@ -46,6 +46,9 @@ Inherits TestController
 		  group = New CoreNumberTests(Self, "Core - Number")
 		  group = New CoreStringTests(Self, "Core - String")
 		  group = New CoreMathsTest(Self, "Core - Maths")
+		  group = New CoreFileTests(self, "Core - File")
+		  group = New CoreWebTest(self, "Core - Web")
+		  //group = New CoreWebTest(self, "Core - JSON")
 		End Sub
 	#tag EndEvent
 

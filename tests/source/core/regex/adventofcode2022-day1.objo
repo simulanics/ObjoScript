@@ -1,0 +1,73 @@
+
+//Read in the Advent of Code testing data
+var fileInput = File.read("C:\\Users\\Matthew\\Desktop\\input.txt")
+var elfData = fileInput.split("\u000A\u000A")
+
+//Convert Elf Food StringArray loaded from file to IntegerArray Map
+//Input: STRING - elfData loaded from file
+//Output: Map containing sum of total calories being carried by each elf.
+function elfCaloriesMap(input) {
+var outArray = {}
+for (var i = 0; i <= input.count -1 ; i++) {
+var currElf = input[i]
+var currElfItems = currElf.split("\u000A")
+outArray[i] = sumElementsofMap(currElfItems)
+}
+return outArray
+}
+
+//Input: MAP - elfCaloriesMap
+//Output: Sum of the calories a particular elf is carrying.
+function sumElementsofMap(incoming) {
+var output = 0
+for (var x = 0; x <= incoming.count -1; x++) {
+output = output + incoming[x].toInteger
+}
+return output
+}
+
+//Input: <AP - elfCaloriesMap
+//Output: Largest total calories being carried by a single elf among the bunch
+function largestSum(input) {
+var idx = -1
+foreach i in input.values {
+if i > idx then idx = i
+}
+return idx
+}
+
+//Sort and return a List in descending order of highest to lowest total calories being carried
+//by each elf. The first index contains the highest total calories; the last - the fewest total calories
+//Input: MAP - elfCaloriesMap
+//Output: Sorted List
+function sortElvesHighesttoLowestCalories(input) {
+var idx = -1
+var sorted = []
+foreach i in input.values {
+if i > idx {
+ idx = i
+sorted.insert(0, i)
+}
+}
+return sorted
+}
+
+//Sum a list of integers and output the total
+//Input: List containing integers
+//Output: Single integer - total sum of all elements
+function sumList(input) {
+var total = 0
+foreach i in input {
+total = total + i
+}
+return total
+}
+
+//Load our elfData into an elfCaloriesMap
+var elvesMap = elfCaloriesMap(elfData)
+//Get a sortedList of our elves by calories on hand (Highest to Lowest)
+var sortedList = sortElvesHighesttoLowestCalories(elvesMap)
+//Print solution 1 - The highest number of calories being carried by an elf
+System.print( "Part 1 Solution: " + largestSum(elvesMap) )
+//Print solution 2 - Slice the top 3 elves carrying the highest number of calories and sum the total
+System.print( "Part 2 Solution: " + sortedList[0..2] )
